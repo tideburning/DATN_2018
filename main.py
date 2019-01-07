@@ -17,12 +17,13 @@ def rolling_window(a, window):
     strides = a.strides + (a.strides[-1],)
     return np.lib.stride_tricks.as_strided(a, shape=shape, strides=strides)
 '''
+# doc dư lieu tu file
 def read_data(file):
     data = pd.read_csv(file, keep_default_na=False, low_memory=False)
     print("READ")
     print(str(len(data)))
     return data.values.tolist()
-
+# tien xu ly lay ra url va payload
 def preprocessing(file):
     print("PREPROCESSING...")
     data = read_data(file)
@@ -34,7 +35,7 @@ def preprocessing(file):
             freq[request[2]].append(str(request[16]))
     print("PREPROCESSING DONE")
     return freq
-
+#khai pha tao thanh tap quy tac dong
 def mining():
 
     train = preprocessing(NORM_TRAIN)
@@ -49,7 +50,7 @@ def mining():
         #print(mining[d])  
     print("MINING DONE, PATTERN CREATED")
     return mining
-
+# doi sanh voi mau binh thuong
 def matchingAnorm(data, rule):
     if len(rule) == 0:
         return False
@@ -61,7 +62,7 @@ def matchingAnorm(data, rule):
         if count/len(data)<0.6:
             return True
     return False
-
+# doi sanh voi mau bat thuong
 def matchingNorm(data, rule):
     if len(rule) == 0:
         return False
@@ -73,7 +74,7 @@ def matchingNorm(data, rule):
         if count/len(data)>0.6:
             return True
     return False
-
+# in ra ma tran nham lan(confusion matrix)
 def print_matrix(cm):
     plt.clf()
     plt.imshow(cm)
@@ -90,7 +91,7 @@ def print_matrix(cm):
             plt.text(j,i,str(s[i][j]) + "=" + str(cm[i][j]))
     plt.savefig("Confusion_matrix_0.0.png")
     plt.show()
-
+# Kiem tra do tin cay, F-score...
 def test(rule, anom, norm):
     sum = 0
     pred = []
@@ -132,7 +133,6 @@ def test(rule, anom, norm):
 
     return F1
 
-
 def print_patterns(rule):
     w = open("log_rules_0.3.txt", "w")
     for data in rule:
@@ -162,7 +162,5 @@ def main():
     test_norm_data = preprocessing(TEST_NORM)
     F1 = test(patterns, test_anom_data, test_norm_data)
 
-#    print("F1-SCORE = ", F1)
-#    print_patterns(patterns)
 if __name__ == '__main__':
     main()
