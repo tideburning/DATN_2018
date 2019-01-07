@@ -58,7 +58,7 @@ def matchingAnorm(data, rule):
         for r in _rule[1]:
             if r in data:
                 count+=1
-        if count/len(data)<0:
+        if count/len(data)<0.6:
             return True
     return False
 
@@ -70,7 +70,7 @@ def matchingNorm(data, rule):
         for r in _rule[1]:
             if r in data:
                 count+=1
-        if count/len(data)>0:
+        if count/len(data)>0.6:
             return True
     return False
 
